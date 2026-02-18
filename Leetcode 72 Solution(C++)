@@ -31,3 +31,10 @@ int solve(string word1,string word2,int i,int j,vector<vector<int>>& ans){
 }
 
 Approach 2 :
+Time complexity : 
+Space complexity : 
+
+int minDistance(string word1,string word2){
+    int n=s1.size();
+    int m=s2.size();
+
