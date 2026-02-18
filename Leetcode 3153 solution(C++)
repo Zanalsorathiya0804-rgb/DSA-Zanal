@@ -1,0 +1,60 @@
+Question : Sum of digit Differences of All Pairs
+
+Approach 1 : 
+Time complexity : O(n^2)
+Space compelxity : O(1)
+
+long long sumDigitDifferences(vector<int> &nums){
+     int n=nums.size();
+     long long ans=0;
+     for(int i=0;i<n-1;i++){
+        for(int j=i+1;j<n;j++){
+            ans+=solve(nums[i],nums[j]);
+        }
+     }
+     return ans;
+}
+
+int solve(int x,int y){
+    int count=0;
+    while(x>0 || y>0){
+        int rem1=x%10;
+        int rem2=y%10;
+        if(rem1!=rem2)
+        count++;
+        x=x/10;
+        y=y/10;
+    }
+    return count;
+}
+
+Approach 2 : 
+Time compelxity : O(n) time compelxity
+Space compelxity : O(1) space complexity
+
+long long sumDigitDifferences(vector<int>& nums){
+     int n=nums.size();
+     long long ans=0;
+     for(int i=0;i<10;i++){
+         vector<int> freq(10,0);
+
+         for(int num : nums){
+             int digit=num%10;
+             freq[digit]++;   
+         }
+ 
+         long long total=0;
+         long long process=0;
+         for(int d=0;d<10;d++){
+             total+=process*freq[d];
+             process+=freq[d];
+         }
+
+         ans+=total;
+
+         for(int &num : nums){
+             num=num/10;
+         }
+    }
+    return ans;
+}
