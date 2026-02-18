@@ -2,8 +2,6 @@ Question : Binary Number with alternating bits
 Time Complexity : O(logn)
 Space Compexity : O(1)
 
---
-
 bool hasAlternatingBits(int n){
      int prev=n%2;
      n=n/2;
