@@ -29,3 +29,5 @@ int solve(string word1,string word2,int i,int j,vector<vector<int>>& ans){
 
     return ans[i][j]=min({insert,delete,replace});
 }
+
+Approach 2 :
