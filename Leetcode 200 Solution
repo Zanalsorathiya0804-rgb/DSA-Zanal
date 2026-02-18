@@ -1,0 +1,117 @@
+Number of Islands
+
+Aproach 1 : 
+Time compelxity : O(n*m)
+Space complexity : O(n*m)
+
+int numIslands(vector<vector<char>>& grid){//O(n*m)
+    int n=grid.size();
+    int m=grid[0].size();
+    int count=0;
+
+    int delrow[]={-1,0,+1,0};
+    int delcol[]={0,+1,0,-1};
+
+    for(int i=0;i<n;i++){
+       for(int j=0;j<m;j++){
+          if(grid[i][j]=='1'){
+             solve(i,j,delrow,delcol,grid);
+             count++;
+          }
+      }
+    }
+
+    return count;
+}
+
+void solve(int row,int col,int delrow[],int delcol[],vector<vector<char>>& grid){
+     int n=grid.size();
+     int m=grid[0].size();
+
+     grid[row][col]='0';
+     for(int d=0;d<4;d++){
+         int nrow=row+delrow[d];
+         int ncol=col+delcol[d];
+
+         if(nrow<0 || nrow>=n || ncol<0 || ncol>=m || grid[nrow][ncol]=='0')
+         continue;
+
+         solve(nrow,ncol,delrow,delcol,grid);
+     }
+}
+
+Approach 2 :
+Time compelxity : O(n*m*1)
+space compelxity : O(n*m)
+int numIslands(vector<vector<char>>& grid){//O(n*m)
+    int n=grid.size();
+    int m=grid[0].size();
+
+    int delrow[]={-1,0,+1,0};
+    int delcol[]={0,+1,0,-1};
+
+    Disjointset ds(n*m);
+
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+           if(grid[i][j]=='1'){
+              int boxno=i*m+j;
+              for(int d=0;d<4;d++){
+                  int nrow=i+delrow[d];
+                  int ncol=i+delcol[d];
+                  if(nrow>=0 && ncol>=0 && nrow<n && ncol<m && grid[nrow][ncol]=='1'){
+                       int nboxno=nrow*m+ncol;
+                       ds.unionbysize(boxno,nboxno);
+                  }
+               }
+            }
+        }
+    }
+
+    int count=0;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+           if(grid[i][j]=='1'){
+               int boxno=i*m+j;
+               if(ds.findparent(boxno)==boxno)
+               count++;
+           }
+        }
+   }
+   return count;
+}
+
+class Disjointset{//O(1)
+      vector<int> size,parent;
+public:
+     Disjointset(int n){
+         size.resize(n+1,1);
+         parent.resize(n+1);
+         for(int i=0;i<=n;i++){
+             parent[i]=i;
+         }
+     }
+
+     int findparent(int node){
+         if(parent[node]==node)
+         return node;
+
+         return parent[node]=findparent(parent[node]);
+     }
+
+     void unionbysize(int u,int v){
+          int ultimateu=findparent(u);
+          int ultimatev=findparent(v);
+
+          if(ultimateu==ultimatev)
+          return;
+
+          if(size[ultimateu]>=size[ultimatev]){
+             size[ultimateu]+=size[ultimatev];
+             parent[ultimatev]=ultimateu;
+          }else{
+             size[ultimatev]+=size[ultimateu];
+             parent[ultimateu]=ultimatev;
+          }
+      }
+};
