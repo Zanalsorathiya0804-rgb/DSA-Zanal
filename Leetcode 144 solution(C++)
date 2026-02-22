@@ -1,5 +1,4 @@
 Question : Binary Tree Preorder Traversal
-
 Approach 1 : 
 Time complexity : O(n)
 Space comeplexity : O(n)
