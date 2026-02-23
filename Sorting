@@ -99,3 +99,32 @@ void merge(vector<int>& arr,int start,int mid,int end){
 5) Quick Sort
 Time compelxity : O(nlogn)
 Space complexity : O(1)
+
+void quickSort(vector<int>& nums,int low,int high){
+     if(low<high){
+         int partitionidx=solve(nums,low,high);
+         quickSort(nums,low,partitionidx-1);
+         quickSort(nums,partitionidx+1,high);
+     }
+}
+
+int solve(vector<int>& arr,int low,int high){
+    int pivot=arr[low];
+    int i=low;
+    int j=high;
+    while(i<j){
+        while(i<=high && arr[i]<=pivot){
+            i++;
+        }
+        while(j>=low && arr[j]>pivot){
+            j--;
+        }
+
+        if(i<j)
+        swap(arr[i],arr[j]);
+    }
+    swap(arr[low],arr[j]);
+    return j;
+}
+
+     
