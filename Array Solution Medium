@@ -61,3 +61,40 @@ vector<int> twoSum(vector<int>& arr,int target){
     }
     return {};
 }
+
+2)Sort an array of 0's , 1's and 2's
+Time compelxity : O(nlogn)
+Space complexity : O(1)
+
+void sortColors(vector<int>& arr){
+     int n=arr.size();
+     int start=0;
+     int end=n-1;
+     solve(arr,start,end);
+}
+
+void solve(vector<int>& nums,int start,int end){
+     int n=nums.size();
+     if(start<end){
+        int pivotidx=quick(nums,start,end);
+        solve(nums,start,pivotidx-1);
+        solve(nums,pivotidx+1,end);
+     }
+}
+
+int quick(vector<int>& nums,int start,int end){
+    int pivot=nums[start];
+    int i=start;
+    int j=end;
+    while(i<j){
+        while(i<=end && nums[i]<=pivot)
+        i++;
+        while(j>=start && nums[j]>pivot)
+        j--;
+
+        if(i<j)
+        swap(nums[i],nums[j]);
+    }
+    swap(nums[start],nums[j]);
+    return j;
+}
