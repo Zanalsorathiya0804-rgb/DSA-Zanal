@@ -156,3 +156,19 @@ int maxSubArray(vector<int>& nums){
     }
     return maxi;
 }
+
+5) Best time to buy and sell stock
+Time complexity : O(n)
+Space complexity : O(1)
+
+int maxProfit(vector<int>& price){
+    int n=price.size();
+    int mini=price[0];
+    int profit=0;
+    for(int i=0;i<n;i++){
+        int cost=mini-price[i];
+        mini=min(mini,price[i]);
+        profit=max(cost,price[i]);
+    }
+    return profit;
+}
