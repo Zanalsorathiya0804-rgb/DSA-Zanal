@@ -118,3 +118,41 @@ int majorityElement(vector<int>& arr){
      }
      return -1;
 }
+
+4) Maximum Subarray Sum(Kadane's Algo)
+
+1st Approach : 
+Time comeplxity : O(n^2)
+Space complexity : O(1)
+
+int maxSubArray(vector<int>& nums){
+    int n=nums.size();
+    int maxi=INT_MIN;
+
+    for(int i=0;i<n;i++){
+       int prefix=0;
+       for(int j=i;j<n;j++){  
+           prefix+=nums[j];
+           maxi=max(maxi,prefix);
+       }
+    }
+    return maxi;
+}
+
+2nd Approach : (Kadane's Algo)
+Time complexity : O(n)
+Space complexity : O(1)
+int maxSubArray(vector<int>& nums){
+    int n=nums.size();
+    int maxi=INT_MIN;
+    int sum=0;
+    for(int i=0;i<n;i++){
+       sum+=nums[i];
+       maxi=max(maxi,sum);
+
+        if(sum<0){
+           sum=0;
+        }
+    }
+    return maxi;
+}
