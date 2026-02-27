@@ -98,3 +98,23 @@ int quick(vector<int>& nums,int start,int end){
     swap(nums[start],nums[j]);
     return j;
 }
+
+3) Majority element(>n/2 times)
+Time complexity : O(n)
+Space complexity : O(n)
+
+int majorityElement(vector<int>& arr){
+    int n=arr.size();
+    int find=n/2;
+
+    unordered_map<int,int> mp;
+    for(int x : arr){
+        mp[x]++;
+    }
+
+     for(auto it : mp){
+        if(it.second>find)
+        return it.first;
+     }
+     return -1;
+}
