@@ -1,6 +1,7 @@
 1) Two Sum Problem : 
 
 1st approach:
+
 Time compelxity : O(n^2)
 Space compelxity : O(1)
 vector<int> twoSum(vector<int>& nums,int target){
