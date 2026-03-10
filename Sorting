@@ -1,6 +1,7 @@
 1) Selection Sort
 Time complexity : O(n^2)
 Space compelxity : O(1)
+
 void selectionSort(vector<int> &arr) {
         int n=arr.size();//select minimum and swap
         
