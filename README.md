@@ -1,5 +1,6 @@
 ## DSA Solutions
 This folder contains my Data Structures & Algorithms practice solutions.
+
 ## Author
 Zanal Sorathiya
 
