@@ -1,0 +1,98 @@
+#include<bits/stdc++.h>
+using namespace std;
+class SegmentTree{
+    vector<int> arr;
+    vector<int> tree;
+    vector<int> lazy;
+    
+    int n;
+
+public:
+    SegmentTree(vector<int>& input){
+        arr=input;
+        n=input.size();
+        tree.resize(n*4);
+        lazy.resize(n*4);
+        build(0,0,n-1);
+    }
+    
+    void build(int node,int start,int end){
+        if(start==end){
+            tree[node]=arr[start];
+            return;
+        }
+        
+        int mid=start+(end-start)/2;
+        
+        build(2*node+1,start,mid);
+        build(2*node+2,mid+1,end);
+        
+        tree[node]=tree[2*node+1]+tree[2*node+2];
+    }
+    void propogate(int node,int start,int end){
+        //update the remaining query
+        if(lazy[node]!=0){
+            tree[node]+=(end-start+1)*lazy[node];
+            
+            //propogate downwords if child
+            if(start!=end){
+                lazy[2*node+1]+=lazy[node];
+                lazy[2*node+2]+=lazy[node];
+            }
+            
+            lazy[node]=0;
+        }
+    }
+    void update(int node,int start,int end,int left,int right,int val){
+        propogate(node,start,end);
+        //no overlap
+        //right start end // start end left
+        if(right<start || end<left)
+        return;
+        
+        //completely overlap
+        // left start end right 
+        if(left<=start && end<=right){
+            lazy[node]+=val;
+            propogate(node,start,end);
+            return;
+        }
+        
+        int mid=start+(end-start)/2;
+        
+        update(2*node+1,start,mid,left,right,val);
+        update(2*node+2,mid+1,end,left,right,val);
+        
+        tree[node]=tree[2*node+1]+tree[2*node+2];
+    }
+    int query(int node,int start,int end,int left,int right){
+        //update if remaining
+        propogate(node,start,end);
+        
+        if(right<start || end<left)
+        return 0;
+        
+        if(left<=start && end<=right)
+        return tree[node];
+        
+        int mid=start+(end-start)/2;
+        
+        return query(2*node+1,start,mid,left,right)+query(2*node+2,mid+1,end,left,right);
+    }
+};
+int main(){
+    int n;
+    cin >> n;
+    
+    vector<int> arr(n);
+    
+    for(int i=0;i<n;i++){
+        cin >> arr[i];
+    }
+    
+    SegmentTree st(arr);
+    
+    st.update(0,0,n-1,2,4,5);
+    
+    cout << st.query(0,0,n-1,0,6) << endl;
+}
